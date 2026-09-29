@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kết quả bình chọn</title>
+<style>body{font-family:system-ui,sans-serif;background:#06152f;color:#eef3ff;max-width:560px;margin:0 auto;padding:20px}
+h2{color:#ffc233}.r{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #1d3b74}</style></head><body>
+<h1>Kết quả bình chọn</h1><div id="o">Đang tải...</div>
+<script>
+var key=new URLSearchParams(location.search).get("key")||"";
+function sec(t,a){return "<h2>"+t+"</h2>"+a.map(function(x){return '<div class="r"><span>'+x.name+"</span><b>"+x.votes+"</b></div>"}).join("")}
+function load(){fetch("/api/results?key="+encodeURIComponent(key)).then(function(r){return r.json()}).then(function(d){
+ document.getElementById("o").innerHTML=d.error?d.error:"<p>Tổng số người bình chọn: <b>"+d.total+"</b></p>"+sec("Giải tập thể",d.teams)+sec("Giải cá nhân",d.kids)})}
+load();setInterval(load,15000);
+</script></body></html>
